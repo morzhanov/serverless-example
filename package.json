@@ -1,0 +1,27 @@
+{
+  "name": "simple-registration",
+  "version": "1.0.0",
+  "description": "Simple registration lambda function",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -b .",
+    "package": "sls package",
+    "deploy": "sls deploy",
+    "remove": "sls remove"
+  },
+  "dependencies": {
+    "@types/uuid": "^8.0.0",
+    "aws-sdk": "^2.439.0",
+    "bcrypt": "^5.0.0",
+    "uuid": "^8.2.0"
+  },
+  "devDependencies": {
+    "@babel/types": "^7.6.1",
+    "@types/aws-lambda": "~8.10.20",
+    "@types/node": "^10.12.30",
+    "serverless": "~1.38.0",
+    "typescript": "~3.3.3333"
+  }
+}

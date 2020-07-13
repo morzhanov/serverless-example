@@ -1,0 +1,71 @@
+service:
+  name: simple-registration
+
+package:
+  exclude:
+    - node_modules/.bin/**
+    - node_modules/.cache/**
+    - node_modules/@types/**
+    - dist/**/*.ts
+    - package.json
+    - tsconfig.json
+    - README.md
+
+provider:
+  name: aws
+  region: "us-west-2"
+  runtime: nodejs12.x
+  stage: "dev"
+  memorySize: 1536
+  timeout: 30
+  logRetentionInDays: 14
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:*
+      Resource: "*"
+
+functions:
+  register:
+    handler: dist/handler.register
+    memorySize: 128
+    description: Register user
+    events:
+      - http:
+          path: users
+          method: post
+  list:
+    handler: dist/handler.list
+    memorySize: 128
+    description: List users
+    events:
+      - http:
+          path: users
+          method: get
+  get:
+    handler: dist/handler.get
+    memorySize: 128
+    description: Get user
+    events:
+      - http:
+          path: users/{id}
+          method: get
+
+resources:
+  Resources:
+    UsersDynamoDBTable:
+      Type: "AWS::DynamoDB::Table"
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: "id"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "id"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: "NEW_AND_OLD_IMAGES"
+        TableName: users
