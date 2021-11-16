@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@types/uuid": "^8.0.0",
-    "aws-sdk": "^2.439.0",
+    "aws-sdk": "^2.814.0",
     "bcrypt": "^5.0.0",
     "uuid": "^8.2.0"
   },
